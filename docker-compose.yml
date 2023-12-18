@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  webserver:
+    build: /.
+    volumes:
+      - ./config/config.toml:/etc/actix/config.toml:ro
+      - ./static:/var/www/html:ro
+    ports:
+      - '80:80'
+    # Optional configuration for Traefik
+#    deploy:
+#      labels:
+#        - traefik.enable=true
+#        - traefik.http.routers.actix.tls=true
+#        - traefik.http.routers.actix.entrypoints=https
+#        - traefik.http.routers.actix.tls.certresolver=yourResolver
+#        - traefik.http.routers.actix.rule=Host(`example.com`,`www.example.com`)
+#        - traefik.http.services.actix.loadbalancer.server.port=8080
+#        - traefik.http.services.actix.loadbalancer.server.scheme=http
+#    networks:
+#      - public-traefik-proxy
+#networks:
+#  public-traefik-proxy:
+#    external: true
