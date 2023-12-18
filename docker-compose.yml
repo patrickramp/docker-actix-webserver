@@ -8,6 +8,7 @@ services:
       - ./static:/var/www/html:ro
     ports:
       - '80:80'
+    restart: unless-stopped
     # Optional configuration for Traefik
 #    deploy:
 #      labels:
