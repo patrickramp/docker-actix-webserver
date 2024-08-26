@@ -17,6 +17,11 @@ RUN apk upgrade --no-cache \
 
 COPY --from=builder /actix-webserver/target/release/actix-webserver /usr/local/bin/webserver
 
-USER 1001
+RUN adduser -H -S -s /sbin/nologin actix \
+    && addgroup -S actix \
+    && chown -R actix:actix /usr/local/bin/webserver
+
+USER actix
 
 ENTRYPOINT [ "/usr/local/bin/webserver" ]
+

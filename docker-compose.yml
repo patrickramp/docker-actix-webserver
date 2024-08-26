@@ -2,21 +2,21 @@ version: "3.9"
 
 services:
   webserver:
-    build: /.
+    build: ./
     environment:
       # Optional configuration for Actix server
-      - BIND_TO=      #The IP address you wish the server to listen on. [0.0.0.0 (listens on all interfaces)]
-      - PORT=         #Port you wish to use for the webserver. [8080]
-      - HTTP_DIR=     #Root directory you wish to serve public files from. [./public]
-      - DOMAIN=       #Public domain name for your server (example.com) [localhost]
-      - MOUNT=        #Primary web path to serve INDEX file ["/"]
-      - INDEX=        #Default file (in HTTP_DIR) to served when someone visits your domain [index.html]
-      - DOMAIN_TWO=   #Optional secondary domain name, [www.DOMAIN] (set as "" to disable)
-      - MOUNT_TWO=    #Optional secondary web path for DOMAIN_TWO ["MOUNT"]
-      - INDEX_TWO=    #Optional index file to serve at DOMAIN_TWO/MOUNT_TWO [INDEX]
+      - BIND_TO=0.0.0.0      #The IP address you wish the server to listen on. [0.0.0.0 (listens on all interfaces)]
+      - PORT=8080         #Port you wish to use for the webserver. [8080]
+      - HTTP_DIR=/var/www/public   #Root directory you wish to serve public files from. [./public]
+      - DOMAIN=localhost       #Public domain name for your server (example.com) [localhost]
+      - MOUNT=/        #Primary web path to serve INDEX file ["/"]
+      - INDEX=index.html        #Default file (in HTTP_DIR) to served when someone visits your domain [index.html]
+      #- DOMAIN_TWO=   #Optional secondary domain name, [www.DOMAIN] (set as "" to disable)
+      #- MOUNT_TWO=    #Optional secondary web path for DOMAIN_TWO ["MOUNT"]
+      #- INDEX_TWO=    #Optional index file to serve at DOMAIN_TWO/MOUNT_TWO [INDEX]
     volumes:
       # Mount directory into the container to store public files
-      - ./public:/usr/local/bin/webserver/public:ro
+      - ./public/:/var/www/public:ro
     ports:
       - '8080:8080'
     restart: unless-stopped
@@ -32,6 +32,8 @@ services:
 #        - traefik.http.services.actix.loadbalancer.server.scheme=http
 #    networks:
 #      - public-traefik-proxy
+
 #networks:
 #  public-traefik-proxy:
 #    external: true
+#
